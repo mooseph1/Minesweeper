@@ -198,10 +198,10 @@ public class MSButton
     {
         if((r>-1 && r<20)&& (c>-1 && c<20))
         {
-            println(r +","+c+"true");
+//            println(r +","+c+"true");
             return true;
         }
-        println(r +","+c+"false");
+//        println(r +","+c+"false");
         return false;            
     }
     
