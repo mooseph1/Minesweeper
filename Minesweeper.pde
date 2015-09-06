@@ -1,13 +1,12 @@
-
-
 import de.bezier.guido.*;
 public final static int NUM_COLS = 20;
-public final static int NUM_BOMBS = 50;
+public final static int NUM_BOMBS = 10;
 public final static int NUM_ROWS = 20;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs = new ArrayList <MSButton> (); //ArrayList of just the minesweeper buttons that are mined
+public boolean gameOver = false;
 
-void setup ()
+public void setup()
 {
     size(400, 400);
     textAlign(CENTER,CENTER);
@@ -35,11 +34,29 @@ public void setBombs()
     }
 }
 
-public void draw ()
+public void removeBombs()
+{
+    for(int i = 0; i < NUM_ROWS; i++)
+    {
+        for(int j = 0; j < NUM_COLS; j++)
+        {
+            if(bombs.contains(buttons[i][j]))
+            {
+                bombs.remove(buttons[i][j]);
+            }
+        }
+    }
+}
+
+public void draw()
 {
     background( 0 );
     if(isWon())
         displayWinningMessage();
+    if(gameOver == true)
+    {
+        displayLosingMessage();
+    }
 }
 
 public boolean isWon()
@@ -80,6 +97,26 @@ public void displayLosingMessage()
     buttons[9][11].setLabel("O");
     buttons[9][12].setLabel("S");
     buttons[9][13].setLabel("E");
+    buttons[10][0].setLabel("P");
+    buttons[10][1].setLabel("R");
+    buttons[10][2].setLabel("E");
+    buttons[10][3].setLabel("S");
+    buttons[10][4].setLabel("S");
+    buttons[10][5].setLabel(" ");
+    buttons[10][6].setLabel("'R'");
+    buttons[10][7].setLabel(" ");
+    buttons[10][8].setLabel("F");
+    buttons[10][9].setLabel("O");
+    buttons[10][10].setLabel("R");
+    buttons[10][11].setLabel(" ");
+    buttons[10][12].setLabel("N");
+    buttons[10][13].setLabel("E");
+    buttons[10][14].setLabel("W");
+    buttons[10][15].setLabel(" ");
+    buttons[10][16].setLabel("G");
+    buttons[10][17].setLabel("A");
+    buttons[10][18].setLabel("M");
+    buttons[10][19].setLabel("E");
 }
 
 public void displayWinningMessage()
@@ -92,6 +129,26 @@ public void displayWinningMessage()
     buttons[9][11].setLabel("I");
     buttons[9][12].setLabel("N");
     buttons[9][13].setLabel("!");
+    buttons[10][0].setLabel("P");
+    buttons[10][1].setLabel("R");
+    buttons[10][2].setLabel("E");
+    buttons[10][3].setLabel("S");
+    buttons[10][4].setLabel("S");
+    buttons[10][5].setLabel(" ");
+    buttons[10][6].setLabel("'R'");
+    buttons[10][7].setLabel(" ");
+    buttons[10][8].setLabel("F");
+    buttons[10][9].setLabel("O");
+    buttons[10][10].setLabel("R");
+    buttons[10][11].setLabel(" ");
+    buttons[10][12].setLabel("N");
+    buttons[10][13].setLabel("E");
+    buttons[10][14].setLabel("W");
+    buttons[10][15].setLabel(" ");
+    buttons[10][16].setLabel("G");
+    buttons[10][17].setLabel("A");
+    buttons[10][18].setLabel("M");
+    buttons[10][19].setLabel("E");
 }
 
 public class MSButton
@@ -169,7 +226,10 @@ public class MSButton
         }
         if(mouseButton==RIGHT)
         {
-            marked=!marked;
+            if(clicked == false)
+            {
+                marked=!marked;
+            }
         }
     }
 
@@ -222,5 +282,20 @@ public class MSButton
             }
         }
         return numBombs;
+    }
+}
+
+public void keyPressed()
+{
+    if(key == 'r')
+    {
+        gameOver = false;
+        for(int i=0;i<bombs.size();i++)
+        {
+            bombs.get(i).setClicked(false);
+        }
+        removeBombs();
+        setup();
+        draw();
     }
 }
